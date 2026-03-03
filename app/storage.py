@@ -1,33 +1,34 @@
-﻿from app.schemas import ItemCreate, ItemOut
+﻿from app.Schemas import ItemCreate, ItemOut
 
-next_id: int = 1
-items: dict[int, ItemOut] = {}
-
-
-def reset_storage() -> None:
-    global next_id
-    next_id = 1
-    items.clear()
+nextId: int = 1
+itemsStore: dict[int, ItemOut] = {}
 
 
-def create_item(data: ItemCreate) -> ItemOut:
-    global next_id
-    item = ItemOut(id=next_id, title=data.title, description=data.description, price=data.price)
-    items[item.id] = item
-    next_id += 1
+def resetStorage() -> None:
+    global nextId
+    nextId = 1
+    itemsStore.clear()
+
+
+def createItem(data: ItemCreate) -> ItemOut:
+    global nextId
+    item = ItemOut(id=nextId, title=data.title, description=data.description, price=data.price)
+    itemsStore[item.id] = item
+    nextId += 1
     return item
 
 
-def get_item(item_id: int) -> ItemOut | None:
-    return items.get(item_id)
+def getItem(itemId: int) -> ItemOut | None:
+    return itemsStore.get(itemId)
 
 
-def list_items(q: str | None, limit: int) -> list[ItemOut]:
-    all_items = list(items.values())
+def listItems(q: str | None, limit: int) -> list[ItemOut]:
+    allItems = list(itemsStore.values())
     if q:
-        all_items = [item for item in all_items if q in item.title]
-    return all_items[: max(0, limit)]
+        allItems = [item for item in allItems if q in item.title]
+    return allItems[: max(0, limit)]
 
 
-def delete_item(item_id: int) -> bool:
-    return items.pop(item_id, None) is not None
+def deleteItem(itemId: int) -> bool:
+    return itemsStore.pop(itemId, None) is not None
+
