@@ -17,9 +17,6 @@ py -m pip install fastapi uvicorn pytest httpx
 uvicorn app.main:app --reload
 ```
 
-Документация:
-- `http://127.0.0.1:8000/docs`
-
 ## Как запустить тесты
 ```bash
 py -m pytest -q
